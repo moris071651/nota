@@ -33,14 +33,27 @@ class Database:
         self.conn.commit()
         return self.cur.fetchone()
 
-    def update_user(self, id, name, password):
-        self.cur.execute("UPDATE users SET name = %s, email = %s WHERE id = %s", (name, password, id))
+    # def update_user(self, id, name, password):
+    #     self.cur.execute("UPDATE users SET name = %s, email = %s WHERE id = %s", (name, password, id))
+    #     self.conn.commit()
+    #     return self.cur.fetchone()
+
+    # def delete_user(self, id):
+    #     self.cur.execute("DELETE FROM users WHERE id = %s", (id,))
+    #     self.conn.commit()
+    #     return self.cur.fetchone()
+    
+    def get_all_notes(self, user_id):
+        self.cur.execute("SELECT * FROM notes WHERE user_id = %s", (user_id,))
+        return self.cur.fetchall()
+    
+    def create_note(self, title, content, user_id):
+        self.cur.execute("INSERT INTO notes (title, content, user_id) VALUES (%s, %s, %s)", (title, content, user_id))
         self.conn.commit()
         return self.cur.fetchone()
-
-    def delete_user(self, id):
-        self.cur.execute("DELETE FROM users WHERE id = %s", (id,))
-        self.conn.commit()
+    
+    def get_note_by_title(self, title, user_id):
+        self.cur.execute("SELECT * FROM notes WHERE title = %s AND user_id = %s", (title, user_id))
         return self.cur.fetchone()
 
     def close(self):
