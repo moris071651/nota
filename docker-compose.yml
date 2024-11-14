@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: nota_postgres_db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - '5432:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - nota_network
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: nota_server
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+    ports:
+      - '22435:22435'
+    depends_on:
+      - db
+    networks:
+      - nota_network
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: nota_client
+    ports:
+      - '19136:19136'
+    depends_on:
+      - server
+    networks:
+      - nota_network
+
+volumes:
+  db-data:
+
+networks:
+  nota_network:
