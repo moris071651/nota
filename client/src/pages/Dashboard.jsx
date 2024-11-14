@@ -41,9 +41,36 @@ const Dashboard = () => {
         setContent(note.content)
         setIsEdited(false);
     };
+    
+    const handleClose = () => {
+        setSelectedNote(null);
+
+        setTitle('');
+        setContent('');
+
+        setIsEdited(false);
+    };
+
+    const handleCreate = () => {
+        setSelectedNote({
+            'id': null,
+            'title': '',
+            'content': '',
+        })
+
+        setTitle(selectedNote.title)
+        setContent(selectedNote.content)
+    };
 
     // TODO: Needs to be connected to the server
     const handleSave = async () => {
+        if (selectedNote.id == null) {
+
+        }
+        else {
+
+        }
+
         setNotes(notes.map((note) => {
             if (note.id == selectedNote.id) {
                 note.title = title
@@ -65,14 +92,6 @@ const Dashboard = () => {
         handleClose()
     };
 
-    const handleClose = () => {
-        setSelectedNote(null);
-
-        setTitle('');
-        setContent('');
-
-        setIsEdited(false);
-    };
 
     return (
         <>
@@ -82,8 +101,15 @@ const Dashboard = () => {
 
         <div className="container-fluid vh-100 vw-100 d-flex p-4 bg-light">
             <div className="row flex-grow-1">
-                <div className="col-md-3 border-end overflow-auto" style={{ maxWidth: '300px' }}>
-                    <h4 className="text-center mb-3">Notes</h4>
+                <div className="col-md-3 border-end overflow-auto position-relative mx-auto" style={{ maxWidth: '300px' }}>
+                    <div className='row'>
+
+                        <h4 className="text-center m-auto col-sm">Notes</h4>
+                        <button
+                            onClick={handleCreate}
+                            className="btn btn-primary m-2 col-sm"
+                        >Add Note</button>
+                    </div>
                     <ul className="list-group">
                         {notes.map((note) => (
                             <li
@@ -96,9 +122,11 @@ const Dashboard = () => {
                             </li>
                         ))}
                     </ul>
+
+                    
                 </div>
 
-                <div className="col-md-9 d-flex flex-column p-4">
+                <div className="col-md-9 d-flex flex-column p-4 mx-auto">
                     {selectedNote ? (
                         <>
                             <div className="my-1">
