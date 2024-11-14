@@ -3,10 +3,11 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { useState } from 'react'
 
 
-const LoginPage = () => {
+const SignUpPage = () => {
     const [error, setError] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [retypedPassword, setRetypedPassword] = useState('')
 
     const handleLogin = (e) => {
         e.preventDefault()
@@ -15,11 +16,14 @@ const LoginPage = () => {
             setError('Password Too Short')
         }
 
+
         if (username.length < 3) {
             setError('Username Too Short')
         }
 
         // if (email)
+
+        // redirect('/dashboard')
 
     }
 
@@ -54,14 +58,14 @@ const LoginPage = () => {
                                 />
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="password" className="form-label">Password</label>
+                                <label htmlFor="retype-password" className="form-label">Password Again</label>
                                 <input
                                     type="password"
                                     className="form-control"
-                                    id="password"
-                                    placeholder="Enter password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    id="retype-password"
+                                    placeholder="Enter password Again"
+                                    value={retypedPassword}
+                                    onChange={(e) => setRetypedPassword(e.target.value)}
                                 />
                             </div>
                             {error && <div className="alert alert-danger">{error}</div>}
@@ -74,4 +78,4 @@ const LoginPage = () => {
     );
 }
 
-export default LoginPage;
+export default SignUpPage;
