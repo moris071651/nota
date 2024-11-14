@@ -24,6 +24,7 @@ const LoginPage = () => {
 
         // if (email)
 
+        // redirect('/dashboard')
     }
 
     return (

@@ -3,9 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import useSession from '../hooks/useSession';
 
 const LandingPage = () => {
-    let { token } = useSession()
-
-    console.log(token)
+    let { getToken } = useSession()
 
     return (
         <div className="container-fluid vh-100 vw-100 d-flex flex-column align-items-center justify-content-center bg-light">
@@ -15,7 +13,7 @@ const LandingPage = () => {
                     A simple note-taking app to help you stay organized and productive.
                 </p>
 
-                {token ? (
+                {getToken() ? (
                     <button
                         className="btn btn-success btn-lg"
                         onClick={() => window.location.href = '/dashboard'}
