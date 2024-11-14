@@ -1,5 +1,10 @@
 from flask import *
-from app.utils import *
+import os
+import sys
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+from utils import *
 
 api = Blueprint('api', __name__)
 

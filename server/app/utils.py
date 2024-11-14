@@ -1,4 +1,4 @@
-from app.models import *
+from models import *
 
 def username_exists(username):
     return Database().get_user_by_name(username) is not None
