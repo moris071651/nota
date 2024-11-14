@@ -1,8 +1,19 @@
 import psycopg2 as db
+from dotenv import load_dotenv
+import os
+
+env_path = os.path.join(os.path.dirname(__file__), '../.env')
+load_dotenv(dotenv_path=env_path)
 
 class Database:
     def __init__(self):
-        self.conn = db.connect("dbname=postgres user=postgres password=postgres")
+        self.conn = db.connect(
+            host=os.getenv('POSTGRES_HOST'),
+            database=os.getenv('POSTGRES_DB'),
+            user=os.getenv('POSTGRES_USER'),
+            password=os.getenv('POSTGRES_PASSWORD'),
+            port=os.getenv('POSTGRES_PORT')
+        )
         self.cur = self.conn.cursor()
         # create table if not exists
         self.cur.execute("CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY NOT NULL, name VARCHAR(255) NOT NULL, pass VARCHAR(255) NOT NULL)")
