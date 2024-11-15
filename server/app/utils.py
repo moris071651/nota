@@ -17,12 +17,20 @@ def login_user(username, password):
 
 def get_all_notes(user_id):
     notes = Database().get_all_notes(user_id)
-    return [note[1] for note in notes]
+    return [{'id': note[0], 'title': note[1]} for note in notes]
 
 def create_note(title, content, user_id):
     note = Database().create_note(title, content, user_id)
     return note[1]
 
-def get_note_by_title(title, user_id):
-    note = Database().get_note_by_title(title, user_id)
+def get_note_by_id(id, user_id):
+    note = Database().get_note_by_id(id, user_id)
+    return note[2] if note else None
+
+def update_note_by_id(id, title, content, user_id):
+    note = Database().update_note_by_id(id, title, content, user_id)
+    return note[2] if note else None
+
+def delete_note_by_id(id, user_id):
+    note = Database().delete_note_by_id(id, user_id)
     return note[2] if note else None

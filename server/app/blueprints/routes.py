@@ -73,13 +73,30 @@ def note():
         note = create_note(data.get('title'), data.get('content'), session['user_id'])
         return jsonify({'success': 'Note created', 'note': note})
     elif request.method == 'GET':
-        title = request.args.get('title')
-        if not title:
-            return jsonify({'error': 'No title provided'})
-        note = get_note_by_title(title, session['user_id'])
+        id = request.args.get('id')
+        if not id:
+            return jsonify({'error': 'No id provided'})
+        note = get_note_by_id(id, session['user_id'])
         return jsonify({'note': note})
     
 @api.route('/notes', methods=['GET'])
 def notes():
     notes = get_all_notes(session['user_id'])
     return jsonify({'notes': notes})
+
+@api.route('/update_note', methods=['POST', 'GET'])
+def update_note():
+    if request.method == 'POST':
+        data = request.json
+        if not data:
+            return jsonify({'error': 'No data provided'})
+        if not data.get('title') or not data.get('content') or not data.get('id'):
+            return jsonify({'error': 'Missing title or content or id'})
+        note = update_note_by_id(data.get('id'), data.get('title'), data.get('content'), session['user_id'])
+        return jsonify({'success': 'Note updated', 'note': note})
+    elif request.method == 'GET':
+        id = request.args.get('id')
+        if not id:
+            return jsonify({'error': 'No title provided'})
+        note = delete_note_by_id(id, session['user_id'])
+        return jsonify({'success': 'Note deleted', 'note': note})
