@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import { redirect } from 'react-router-dom';
 import useSession from '../hooks/useSession';
 
 const LandingPage = () => {
@@ -24,7 +25,7 @@ const LandingPage = () => {
                     <>
                         <button
                             className="btn btn-primary btn-lg me-3"
-                            onClick={() => window.location.href = '/login'}
+                            onClick={() => redirect('/login')}
                         >
                             Login
                         </button>
