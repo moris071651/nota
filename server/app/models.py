@@ -53,8 +53,18 @@ class Database:
         self.conn.commit()
         return self.cur.fetchone()
     
-    def get_note_by_title(self, title, user_id):
-        self.cur.execute("SELECT * FROM notes WHERE title = %s AND user_id = %s", (title, user_id))
+    def get_note_by_id(self, id, user_id):
+        self.cur.execute("SELECT * FROM notes WHERE note_id = %s AND user_id = %s", (id, user_id))
+        return self.cur.fetchone()
+    
+    def update_note_by_id(self, id, title, content, user_id):
+        self.cur.execute("UPDATE notes SET content = %s, title = %s WHERE note_id = %s AND user_id = %s", (content, title, id, user_id))
+        self.conn.commit()
+        return self.cur.fetchone()
+    
+    def delete_note_by_id(self, id, user_id):
+        self.cur.execute("DELETE FROM notes WHERE note_id = %s AND user_id = %s", (id, user_id))
+        self.conn.commit()
         return self.cur.fetchone()
 
     def close(self):
