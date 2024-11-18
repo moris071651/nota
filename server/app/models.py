@@ -30,19 +30,10 @@ class Database:
         return self.cur.fetchone()
 
     def create_user(self, name, password):
-        self.cur.execute("INSERT INTO users (name, email) VALUES (%s, %s)", (name, password))
+        self.cur.execute("INSERT INTO users (name, pass) VALUES (%s, %s)", (name, password))
         self.conn.commit()
         return self.cur.fetchone()
 
-    # def update_user(self, id, name, password):
-    #     self.cur.execute("UPDATE users SET name = %s, email = %s WHERE id = %s", (name, password, id))
-    #     self.conn.commit()
-    #     return self.cur.fetchone()
-
-    # def delete_user(self, id):
-    #     self.cur.execute("DELETE FROM users WHERE id = %s", (id,))
-    #     self.conn.commit()
-    #     return self.cur.fetchone()
     
     def get_all_notes(self, user_id):
         self.cur.execute("SELECT * FROM notes WHERE user_id = %s", (user_id,))
