@@ -8,13 +8,7 @@ load_dotenv(dotenv_path=env_path)
 
 class Database:
     def __init__(self):
-        self.conn = db.connect(
-            host=os.getenv('POSTGRES_HOST'),
-            database=os.getenv('POSTGRES_DB'),
-            user=os.getenv('POSTGRES_USER'),
-            password=os.getenv('POSTGRES_PASSWORD'),
-            port=os.getenv('POSTGRES_PORT')
-        )
+        self.conn = db.connect(os.getenv('DATABASE_URL'))
         self.cur = self.conn.cursor()
         # create table if not exists
         self.cur.execute("CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY NOT NULL, name VARCHAR(255) NOT NULL, pass VARCHAR(255) NOT NULL)")

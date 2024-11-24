@@ -20,10 +20,13 @@ services:
     container_name: nota_server
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      FLASK_SECRET_KEY: ${FLASK_SECRET_KEY}
     ports:
       - '5000:5000'
     depends_on:
       - db
+    volumes:
+      - ./server:/app
     networks:
       - nota_network
 

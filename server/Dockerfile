@@ -8,4 +8,6 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD ["python", "app/app.py"]
+EXPOSE 5000
+
+CMD ["python", "app/app.py", "--host=0.0.0.0"]
