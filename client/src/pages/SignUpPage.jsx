@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import { useState } from 'react'
+import useSession from '../hooks/useSession';
 
 
 const SignUpPage = () => {
@@ -10,21 +11,55 @@ const SignUpPage = () => {
     const [retypedPassword, setRetypedPassword] = useState('')
 
     const handleLogin = (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
-        if (password.length < 8) {
-            setError('Password Too Short')
-        }
-
+        setError('');
 
         if (username.length < 3) {
-            setError('Username Too Short')
+            return setError('Username must be at least 3 characters long');
         }
 
-        // if (email)
+        if (password.length < 6) {
+            return setError('Password must be at least 6 characters long');
+        }
 
-        // redirect('/dashboard')
+        if (password !== retypedPassword) {
+            return setError('Passwords do not match');
+        }
 
+        fetch("http://nota_server:5000/api/register", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            return response.json();
+        })
+        .then(data => {
+            console.log(data)
+            if ('error' in data) {
+                setError(data['error']);
+            }
+            else {
+                if (data['success'] == 'User created') {
+                    const { saveToken } = useSession();
+                    saveToken(true);
+                    location.href = '/';
+                }
+                else {
+                    setError(data['success']);
+                }
+            }
+        })
+        .catch(error => {
+            setError('Error: ' + error);
+        });
     }
 
 

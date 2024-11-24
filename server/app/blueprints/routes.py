@@ -21,6 +21,7 @@ def check_login():
 @api.route('/register', methods=['POST', 'GET'])
 def register():
     if request.method == 'POST':
+        print(request.json)
         data = request.json
         if not data:
             session['logged_in'] = False
