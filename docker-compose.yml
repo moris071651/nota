@@ -10,8 +10,8 @@ services:
       - '5432:5432'
     volumes:
       - db-data:/var/lib/postgresql/data
-    # networks:
-    #   - nota_network
+    networks:
+      - nota_network
 
   server:
     build:
@@ -24,25 +24,11 @@ services:
       - '5000:5000'
     depends_on:
       - db
-    # networks:
-    #   - nota_network
-
-  client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-    container_name: nota_client
-    ports:
-      - '5173:5173'
-    volumes:
-      - ./client:/app
-    depends_on:
-      - server
-    # networks:
-    #   - nota_network
+    networks:
+      - nota_network
 
 volumes:
-  db-data:
+  db-data: {}
 
-# networks:
-#   nota_network:
+networks:
+  nota_network: {}
